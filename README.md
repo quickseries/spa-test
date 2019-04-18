@@ -4,12 +4,17 @@ Create an small single-page application, and share your code using a Git repo.
 
 You must create a weather logging app that allows users to enter temperatures in order to calculate its median, average, highest and lowest points.
 
-You should NOT spend more than 1 day on this test. We do not expect you to complete every single user stories in that amount of time.
+You should NOT spend more than 1-2 days on this test. We do not expect you to complete every single user stories in that amount of time.
 
 We will evaluate you based on:
 - How clean your code is;
 - The structure of your application;
 - Your choice of UI architecture;
+
+# You must use
+- MongoDB or Postgres database to store the weather data
+- NodeJS to create your APIs
+- AngularJS or Angular 2+ to create the UI
 
 Don't forget to provide installation instructions with your project so we can run it for validation.
 
