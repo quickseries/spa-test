@@ -14,7 +14,7 @@
 
     <ng-container matColumnDef="temperature">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Temperature</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ element.temperature }} °c</mat-cell>
+      <mat-cell *matCellDef="let element">{{ element.temperature | number:'1.1-1' }} °c</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="delete">
