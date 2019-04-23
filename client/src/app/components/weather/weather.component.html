@@ -1,0 +1,35 @@
+<section>
+  <form
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    fxLayoutGap="10px"
+    [formGroup]="weatherForm"
+    (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input
+        type="number"
+        matInput
+        placeholder="Current temperature"
+        formControlName="temperature">
+      <mat-hint>* This field is required</mat-hint>
+      <mat-error>Invalid or missing temperature.</mat-error>
+    </mat-form-field>
+    
+  <button 
+    fxHide.xs="true" 
+    type="submit" 
+    mat-raised-button color="primary" 
+    [disabled]="weatherForm.invalid || isLoading">
+      Add Temperature
+  </button>
+    <button 
+    fxHide
+    fxShow.xs="true"
+    type="submit" 
+    mat-icon-button
+    matTooltip="Add temperature"
+    [disabled]="weatherForm.invalid || isLoading">
+        <mat-icon>add</mat-icon>
+      </button>
+  </form>
+</section>
