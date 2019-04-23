@@ -1,61 +1,27 @@
-# Instructions
+# quick-series
+An example of Angular and Express app implementation
 
-Create an small single-page application, and share your code using a Git repo.
+This repository intends to provide **Client** and **Server** implementation as described [here](https://github.com/quickseries/spa-test). For the sake of simplicity, it was used only one git repository for both.
 
-You must create a weather logging app that allows users to enter temperatures in order to calculate its median, average, highest and lowest points.
+### Client
+The client uses Angular2+ and Angular Material
+* You can set the API endpoint using the "environment.*.ts" file on environments' folder
 
-You should NOT spend more than 1-2 days on this test. We do not expect you to complete every single user stories in that amount of time.
+### Server
+The server uses Express and MongoDB. You will need to have MongoDB installed.
+* You can set the environment variables using the ".env" file on server's folder
 
-We will evaluate you based on:
-- How clean your code is;
-- The structure of your application;
-- Your choice of UI architecture;
+### Example Build
 
-# You must use
-- MongoDB or Postgres database to store the weather data
-- NodeJS to create your APIs
-- AngularJS or Angular 2+ to create the UI
-
-Don't forget to provide installation instructions with your project so we can run it for validation.
-
-# User Stories:
-- As a user, I want to add a temperature to my log
-- The input must only take numbers
-- You must display a validation error when invalid data is entered in the input
-- As a user, I want to delete a temperature from my log
-- As a user, I want to see the temperature median in my entire log
-- As a user, I want to see the average temperature of my entire log
-- As a user, I want to see the highest temperature in my log
-- As a user, I want to see the lowest temperature in my log
-
-# UI WireFrame
-
+For test purposes only:
 ```
-Temperature
-------------------------------   -------------------
-|                            |   | Add Temperature |
-------------------------------   -------------------
-* This field is required
+git clone https://github.com/kernelsafe/quick-series
+cd quick-series/server/
+npm i
+To run the tests: npm run test
+To start the server: npm run start
 
---------------------------------------------------------------------------------
-
-Average: 28.9 °c     Highest: 32.1 °c     Lowest: -3.6 °c     Median: 18.4 °c
-
---------------------------------------------------------------------------------
-
-Temperature Log:
-
--------------------------------------------------------------
-| Date           | Temperature              |               |
--------------------------------------------------------------
-| Jan 21, 2018   | -14.9 °c                 | Delete        |
--------------------------------------------------------------
-| Jan 21, 2018   | -14.9 °c                 | Delete        |
--------------------------------------------------------------
-| Jan 21, 2018   | -14.9 °c                 | Delete        |
--------------------------------------------------------------
-| Jan 21, 2018   | -14.9 °c                 | Delete        |
--------------------------------------------------------------
-| Jan 21, 2018   | -14.9 °c                 | Delete        |
--------------------------------------------------------------
+cd ../client/
+npm i
+To start the client: ng serve --open
 ```
