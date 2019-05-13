@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='app'>
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+ <div ng-controller='WeatherCtrl'>
+
+  <h3>Weather logging app</h3>
+  
+  <label for="weather">weather&nbsp;&nbsp;</label><input ng-model='we1'  name="weather" > <br/><br/>
+  <input type='button' value='add weather to log' ng-click='add()'><br/> 
+  
+  
+<br/><br/>
+
+  <span>Weather median is:  {{median}}</span><br/>
+  <span>Weather Average is: {{avg}}</span><br/>
+  <span>Weather highest is: {{high}}</span><br/>
+  <span>Weather lowest is:  {{low}}</span><br/><br/>
+   
+  <input type='button' value='Average' ng-click='calAvg()' style="width:90px">  
+  <input type='button' value='median' ng-click='calMedian()' style="width:90px"><br/>  
+  <input type='button' value='highest' ng-click='calHigh()' style="width:90px">  
+  <input type='button' value='lowest' ng-click='calLow()' style="width:90px"><br/> 
+  
+ </div>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.4/angular.js"></script>
+  <script src='app.js'></script>
+</body>
+</html>
