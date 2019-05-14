@@ -1,24 +1,40 @@
-var express = require('express');
-
+var express = require('express'), bodyParser = require('body-parser');
+var morgan = require('morgan');
+var Log = require('./log');
 var app = express();
 
-app.get('/', function(request,response){
-    response.header("Access-Control-Allow-Origin", "*");
-    response.header("Access-Control-Allow-Headers", "X-Requested-With");
+app.listen(3333,function(){	console.log("listening 3333")});
+app.use(morgan('dev'));
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+});
+app.use(bodyParser.json());
 
-    console.log(" GET method connected ...");
-	
-    var respBody = JSON.stringify(request.headers,null,'');
-	
-	response.status(200).send(respBody);
-	
+
+let logs=[];  // save to memory
+app.post('/save', function(req,resp){	
+    console.log("POST method connected ...");	
+    console.log(req.body.we1);
+    let weather = 1.0* req.body.we1;
+    logs.push(weather);
+    // ----------------------------------  save to mongodb
+	var log = new Log({we1:req.body.we1});
+    
+	log.save(function(error){
+		console.log(error);		
+	});
+    // ---------------------------------- 
+    
+ 	resp.status(200).send(req.body);
 });
 
 app.get('/logs', function(request,response){
     response.header("Access-Control-Allow-Origin", "*");
     response.header("Access-Control-Allow-Headers", "X-Requested-With");
-	
-    let logs =[12,23,13,26,32,33,12,21,34,20];
     var respBody = JSON.stringify(logs,null,'');
 	console.log(typeof logs);
 	console.log(logs instanceof Array);
@@ -49,4 +65,3 @@ app.get('/authors', function(request,response){
 	
 });
 
-app.listen(3333);

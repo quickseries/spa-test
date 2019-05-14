@@ -1,9 +1,9 @@
 angular.module('app', [])
 
 angular.module('app')
-   .controller('WeatherCtrl', function ($scope, $http) {	
-	   $scope.logs = [];
-	    
+   .controller('WeatherCtrl', function (LogService, $scope, $http) {	
+  	    $scope.logs = [];
+  	    
 		$scope.median = 0.0;
 		$scope.avg = 0.0;
 		$scope.high = 0.0;
@@ -18,18 +18,32 @@ angular.module('app')
 
 		$scope.calMedian = function() {
             console.log('-----median');
-			$scope.median = 22;
+	    	LogService.getLogFromExpress()
+	    	  .then(function (data) {
+	    		let logs =   data.sort();
+	  			$scope.median = logs[0];
+	    	  } )
 		}
 				
     	$scope.calAvg = function() {
-    		console.log($scope.logs);    		
-    	    var sum = 0.0;
-    	    for (var i = 0; i < $scope.logs.length; i++) {
-    	       sum = sum + $scope.logs[i];
-    	    }
-    	    console.log("Sum = " + sum); 
-           // console.log('-----Avg----'+ sum/$scope.logs.length);
-	         $scope.avg = (sum/$scope.logs.length).toFixed(2);
+	    	LogService.getLogFromExpress()
+	    	  .then(function (data) {
+	    		  $scope.logs =   data.sort();
+	  			  $scope.median = $scope.logs[0];
+		          $scope.high = $scope.logs[0];
+		          $scope.low = $scope.logs[$scope.logs.length-1];
+
+	    		console.log($scope.logs);    		
+	    	    var sum = 0.0;
+	    	    for (var i = 0; i < $scope.logs.length; i++) {
+	    	       sum = sum + $scope.logs[i];
+	    	    }
+	    	    console.log("Sum = " + sum); 
+	           // console.log('-----Avg----'+ sum/$scope.logs.length);
+		         $scope.avg = (sum/$scope.logs.length).toFixed(2);
+
+	    	}) 
+               
     	}
     	
 	    $scope.calHigh = function() {
@@ -42,20 +56,58 @@ angular.module('app')
 	    }
 	    
 	    $scope.getLogs = function () {
-	        return $http.get('http://localhost:3333/logs')
-	        .then(function (resp) {
-	           	let logs = resp.data;
-	           	
-	           	//console.log(typeof logs);
+	    	LogService.getLogFromExpress()
+	    	  .then(function (data) {	    	    
+	           	let logs = data.sort();	           	
 	           	console.log(logs instanceof Array);
 	            var sum = 0;
 	            for (var i = 0; i< logs.length; i++){
 	                 sum += parseFloat(logs[i]);
 	            }
-	            $scope.avg = (sum/logs.length).toFixed(2);;
-	           	
-	           	console.log( JSON.stringify(resp.data,null,2));
-	        })
-	      }
-  	
+	            $scope.avg = (sum/logs.length).toFixed(2);
+	            $scope.high = data[0];
+	            $scope.low = data[data.length-1];
+	            $scope.median = data[data.length/2-1];
+	            
+	           	console.log( JSON.stringify(data.sort(),null,2));
+	    	  })
+	    }
+	    
+	    
+	    $scope.insert = function() {
+	    	console.log('----------------post');
+	    	var saveData = {};
+	    	saveData.we1= $scope.we1;
+	    	
+	        $http({
+	          method: 'POST',
+	          url: 'http://localhost:3333/save',
+	          data: JSON.stringify(saveData)                   // '{"we1": 31}'
+
+	        }).then(function success(resp) {
+                      console.log(JSON.stringify(resp,null,2));
+	        }, function error(err) {
+
+	        });
+
+	      };
+
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 })
+
+angular.module('app')
+.service('LogService', function ($http) {
+  this.getLogFromExpress = function () {
+    return $http.get('http://localhost:3333/logs')
+    .then(function (resp) {
+      return resp.data
+    })
+  }
+})
+

@@ -10,7 +10,7 @@
   <h3>Weather logging app</h3>
   
   <label for="weather">weather&nbsp;&nbsp;</label><input ng-model='we1'  name="weather" > <br/><br/>
-  <input type='button' value='add weather to log' ng-click='add()'><br/> 
+  <input type='button' value='add weather to log' ng-click='insert()'><br/> 
   
   
 <br/><br/>
@@ -21,6 +21,7 @@
   <span>Weather lowest is:  {{low}}</span><br/><br/>
 
    
+  <input type='button' value='Post' ng-click='insert()' style="width:90px"> <br/> 
   <input type='button' value='Average' ng-click='calAvg()' style="width:90px">  
   <input type='button' value='median' ng-click='calMedian()' style="width:90px"><br/>  
   <input type='button' value='highest' ng-click='calHigh()' style="width:90px">  
