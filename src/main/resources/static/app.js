@@ -3,12 +3,12 @@ angular.module('app', [])
 angular.module('app')
    .controller('WeatherCtrl', function (LogService, $scope, $http) {	
   	    $scope.logs = [];
-  	    
+  	    $scope.show=false;
 		$scope.median = 0.0;
 		$scope.avg = 0.0;
 		$scope.high = 0.0;
 		$scope.low = 0.0;
-		
+	     	
 		$scope.add = function() {
 			let tmp =  $scope.we1;
             console.log('-----add ---'+ $scope.we1);
@@ -92,11 +92,38 @@ angular.module('app')
 
 	      };
 
+		  $scope.showdb = function () {
+			  $scope.show=!$scope.show;
+			  console.log("--------------------showdb--------")
+			  return $http.get('http://localhost:3333/showdb')
+			    .then(function (resp) {
+			       console.log(JSON.stringify(resp.data,null,2));
+			       $scope.db = resp.data;
+			    })
+			  
+		  };  
+		  
+		  $scope.deletelog = function () {
+			  console.log("--------------------delete--------"+$scope.deleteid)
+			  
+			  var delData = {};
+	    	  delData.id= $scope.deleteid;
+	    	  
+		return	 $http({
+	          method: 'POST',
+	          url: 'http://localhost:3333/dele',
+	          data: JSON.stringify(delData)          
+
+	        }).then(function success(resp) {
+                      console.log(JSON.stringify(resp,null,2));
+	        }, function error(err) {
+
+	        });
+			  
+		  };  
 	    
 	    
-	    
-	    
-	    
+		    
 	    
 	    
 })

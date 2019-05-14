@@ -1,4 +1,5 @@
 var express = require('express'), bodyParser = require('body-parser');
+var db=require('./db')
 var morgan = require('morgan');
 var Log = require('./log');
 var app = express();
@@ -13,9 +14,20 @@ app.use(function (req, res, next) {
     next();
 });
 app.use(bodyParser.json());
+let logs=[];  // in memory
+
+app.post('/dele', function(req,resp){	
+    console.log("delete - POST method connected ...");	
+    console.log(req.body.id);
+    Log.remove({_id: req.body.id},
+      function(err){
+    	  console.log(err);
+      }
+    );
+ 	resp.status(200).send("ok");
+});
 
 
-let logs=[];  // save to memory
 app.post('/save', function(req,resp){	
     console.log("POST method connected ...");	
     console.log(req.body.we1);
@@ -25,12 +37,28 @@ app.post('/save', function(req,resp){
 	var log = new Log({we1:req.body.we1});
     
 	log.save(function(error){
-		console.log(error);		
+		if(error){
+			console.log(error);					
+		}else{
+			console.log("--------save to mongo db");		
+
+		}
 	});
     // ---------------------------------- 
     
  	resp.status(200).send(req.body);
 });
+
+app.get('/showdb', function(request,response){
+	console.log('------------------------------express server show db called')
+	
+	Log.find().exec( function(error,data){
+	      console.log(data)    	
+	  	response.status(200).send(data);
+	});
+	
+});
+
 
 app.get('/logs', function(request,response){
     response.header("Access-Control-Allow-Origin", "*");
@@ -43,6 +71,7 @@ app.get('/logs', function(request,response){
 	response.status(200).send(respBody);
        	 
 });
+
 
 app.get('/authors', function(request,response){
 
