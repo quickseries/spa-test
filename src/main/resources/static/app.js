@@ -9,29 +9,22 @@ angular.module('app')
 		$scope.high = 0.0;
 		$scope.low = 0.0;
 	     	
-		$scope.add = function() {
-			let tmp =  $scope.we1;
-            console.log('-----add ---'+ $scope.we1);
-            $scope.logs.push(1.0*tmp);
-            console.log('-----add ---'+ $scope.logs);
-        }
-
-		$scope.calMedian = function() {
-            console.log('-----median');
+    	$scope.calAvg = function() {  // logs
+	        console.log('-----Avg----');
+    		
 	    	LogService.getLogFromExpress()
 	    	  .then(function (data) {
-	    		let logs =   data.sort();
-	  			$scope.median = logs[0];
-	    	  } )
-		}
-				
-    	$scope.calAvg = function() {
-	    	LogService.getLogFromExpress()
-	    	  .then(function (data) {
+	    		  
+		    		let ddd = data;
+	  	            console.log(ddd);
+	  	            var idx = Math.ceil(ddd.length/2)-1;
+			        var m = ddd[idx];
+	  	            console.log(idx+ '-----median-----'+ m);
+		    		$scope.median = m;
+	    		  
 	    		  $scope.logs =   data.sort();
-	  			  $scope.median = $scope.logs[0];
-		          $scope.high = $scope.logs[0];
-		          $scope.low = $scope.logs[$scope.logs.length-1];
+		          $scope.low = $scope.logs[0];
+		          $scope.high = $scope.logs[$scope.logs.length-1];
 
 	    		console.log($scope.logs);    		
 	    	    var sum = 0.0;
@@ -41,19 +34,8 @@ angular.module('app')
 	    	    console.log("Sum = " + sum); 
 	           // console.log('-----Avg----'+ sum/$scope.logs.length);
 		         $scope.avg = (sum/$scope.logs.length).toFixed(2);
-
-	    	}) 
-               
-    	}
-    	
-	    $scope.calHigh = function() {
-            console.log('-----high');
-			$scope.high = 32;
-	    }
-	    $scope.calLow = function() {
-            console.log('-----low');
-			$scope.low = -18;
-	    }
+	    	})                
+    	}    	
 	    
 	    $scope.getLogs = function () {
 	    	LogService.getLogFromExpress()
@@ -115,16 +97,11 @@ angular.module('app')
 	          data: JSON.stringify(delData)          
 
 	        }).then(function success(resp) {
-                      console.log(JSON.stringify(resp,null,2));
+                 console.log(JSON.stringify(resp,null,2));
 	        }, function error(err) {
 
 	        });
-			  
 		  };  
-	    
-	    
-		    
-	    
 	    
 })
 

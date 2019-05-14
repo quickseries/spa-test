@@ -53,7 +53,7 @@ app.get('/showdb', function(request,response){
 	console.log('------------------------------express server show db called')
 	
 	Log.find().exec( function(error,data){
-	      console.log(data)    	
+	    console.log(data)    	
 	  	response.status(200).send(data);
 	});
 	
@@ -63,34 +63,23 @@ app.get('/showdb', function(request,response){
 app.get('/logs', function(request,response){
     response.header("Access-Control-Allow-Origin", "*");
     response.header("Access-Control-Allow-Headers", "X-Requested-With");
-    var respBody = JSON.stringify(logs,null,'');
-	console.log(typeof logs);
-	console.log(logs instanceof Array);
-	console.log(Array.isArray(logs));
+    
+	Log.find().exec( function(error,data){
+	    var logs=[];
+        for (var i = 0; i< data.length; i++){
+             logs.push((1.0*data[i].we1));
+        }
+	    console.log(logs) ;
+	    
+	  	response.status(200).send(logs);
+	});
+
+//    var respBody = JSON.stringify(logs,null,'');
+//	console.log(typeof logs);
+//	console.log(logs instanceof Array);
+//	console.log(Array.isArray(logs));
 	
-	response.status(200).send(respBody);
+//	response.status(200).send(respBody);
        	 
-});
-
-
-app.get('/authors', function(request,response){
-
-    response.header("Access-Control-Allow-Origin", "*");
-    response.header("Access-Control-Allow-Headers", "X-Requested-With");
-         //res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    console.log(" GET /authors  method connected ...");
-	
-	var randNum = Math.floor((Math.random() * 4000) + 1) + ""; 
-	console.log("sleeping ... " + randNum);
-	var  millis =randNum;
-    var respBody = JSON.stringify(randNum,null,'');
-	 
-	var date = new Date();
-    var curDate = null;
-    do { curDate = new Date(); }
-    while(curDate-date < millis);
-     
-	response.status(200).send(respBody);
-	
 });
 
