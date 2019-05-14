@@ -1,7 +1,7 @@
 angular.module('app', [])
 
 angular.module('app')
-   .controller('WeatherCtrl', function ($scope) {	
+   .controller('WeatherCtrl', function ($scope, $http) {	
 	   $scope.logs = [];
 	    
 		$scope.median = 0.0;
@@ -40,5 +40,22 @@ angular.module('app')
             console.log('-----low');
 			$scope.low = -18;
 	    }
+	    
+	    $scope.getLogs = function () {
+	        return $http.get('http://localhost:3333/logs')
+	        .then(function (resp) {
+	           	let logs = resp.data;
+	           	
+	           	//console.log(typeof logs);
+	           	console.log(logs instanceof Array);
+	            var sum = 0;
+	            for (var i = 0; i< logs.length; i++){
+	                 sum += parseFloat(logs[i]);
+	            }
+	            $scope.avg = (sum/logs.length).toFixed(2);;
+	           	
+	           	console.log( JSON.stringify(resp.data,null,2));
+	        })
+	      }
   	
 })

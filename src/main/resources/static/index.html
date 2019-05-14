@@ -19,15 +19,38 @@
   <span>Weather Average is: {{avg}}</span><br/>
   <span>Weather highest is: {{high}}</span><br/>
   <span>Weather lowest is:  {{low}}</span><br/><br/>
+
    
   <input type='button' value='Average' ng-click='calAvg()' style="width:90px">  
   <input type='button' value='median' ng-click='calMedian()' style="width:90px"><br/>  
   <input type='button' value='highest' ng-click='calHigh()' style="width:90px">  
-  <input type='button' value='lowest' ng-click='calLow()' style="width:90px"><br/> 
+  <input type='button' value='lowest' ng-click='calLow()' style="width:90px"><br/><br/> 
+  <input type='button' value='getLogs http' ng-click='getLogs()' style="width:90px"><br/> 
   
  </div>
+ <br/>
+   <div id ="result"></div>
+   <div>
+      <button type="button" onclick="getNum()">get logs XHR</button><br>
+   <div>
   
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.4/angular.js"></script>
   <script src='app.js'></script>
+  
+  <script language ="javaScript"  type="text/javascript">
+     var xmlhttp;     
+     function getNum(){
+         xmlhttp = new XMLHttpRequest();
+         xmlhttp.onreadystatechange = callback; 
+         xmlhttp.open("GET","http://localhost:3333/logs",true);
+         xmlhttp.send();        
+     }
+     function callback(){
+         if(xmlhttp.readyState==4 && xmlhttp.status==200){
+             document.getElementById('result').innerHTML = xmlhttp.responseText;
+         }
+     }
+ </script>
+  
 </body>
 </html>
