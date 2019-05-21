@@ -1,6 +1,7 @@
 import { Component,OnInit} from '@angular/core';
 import {TemperatureDataService} from '../service/temperature-data-service.service'
 import {TempLog} from '../components/temp-log';
+import * as _ from 'lodash';
 
 @Component({
     selector: 'temperatureLog',
@@ -22,8 +23,22 @@ export class TemperatureLogContainer implements OnInit  {
     this._tempDataService
         .getTempData()
         .subscribe(temperatureData=>{
-          console.log(temperatureData)
           this.temperatureLogs = temperatureData
+          this.setStats()
         })
+  }
+
+  setStats(){
+    let result = []
+    _.each(this.temperatureLogs,(temperature)=>{
+      result.push(temperature.temperature)
+   })
+   this.highest = (result.length!=0)?_.max(result):0
+   this.lowest = (result.length!=0)?_.min(result):0
+   this.average = (result.length!=0)? (_.sum(result) /result.length ):0
+
+   const mid = Math.floor(result.length / 2),
+   nums = [...result].sort((a, b) => a - b);
+   this.median= result.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
   }
 }
