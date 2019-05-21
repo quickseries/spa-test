@@ -41,4 +41,8 @@ export class TemperatureLogContainer implements OnInit  {
    nums = [...result].sort((a, b) => a - b);
    this.median= result.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
   }
+
+  addTemperature(event,temperatureText){
+      console.log(temperatureText.value)
+  }
 }

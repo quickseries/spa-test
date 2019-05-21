@@ -2,9 +2,10 @@
         <h1>Temperature Weather Log</h1>
         <div class="form-group">
             <input class="form-control input-lg" placeholder="Enter Temperature" 
-            autofocus="">
+            autofocus=""
+            #temperatureText>
             <br>
-            <button class="btn btn-primary btn-block">Add Temperature</button>
+            <button (click)="addTemperature($event,temperatureText)" class="btn btn-primary btn-block">Add Temperature</button>
         </div>
     </div>
     <div> Average: {{average}}°c  Highest: {{highest}}°c     Lowest: {{lowest}}°c     Median: {{median}}°c </div>
