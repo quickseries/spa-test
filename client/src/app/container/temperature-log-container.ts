@@ -58,7 +58,13 @@ export class TemperatureLogContainer implements OnInit  {
             date: moment().format('MMMM Do YYYY'),
             logid: uuid()
           }
-          console.log(newTemperatureLog)
+
+          const result = this._tempDataService.saveTemperatureLog(newTemperatureLog);
+            result.subscribe(x=>{
+                this.temperatureLogs.push(newTemperatureLog);
+                temperatureText.value = '';
+                this.setStats()
+            })
       }
   }
 }

@@ -11,9 +11,11 @@
     <div> Average: {{average}}°c  Highest: {{highest}}°c     Lowest: {{lowest}}°c     Median: {{median}}°c </div>
     <br>
     <div class="form-group temp-log-list">
-            <ul class="list-inline"> 
-                    <li class="list-inline-item"> date</li>
-                    <li class="list-inline-item"> temperature.temperature &#x2103;</li>
-                    <li class="list-inline-item"> <button class="btn btn-danger pull-right">Delete</button></li>
-            </ul><br>
+                <div *ngFor="let temperature of temperatureLogs">
+                        <ul class="list-inline">
+                                <li class="list-inline-item"> {{temperature.date}}</li>
+                                <li class="list-inline-item"> {{temperature.temperature}} &#x2103;</li>
+                                <li class="list-inline-item"> <button class="btn btn-danger pull-right">Delete</button></li>
+                        </ul><br>
+                </div>
     </div>
