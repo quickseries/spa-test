@@ -2,6 +2,8 @@ import { Component,OnInit} from '@angular/core';
 import {TemperatureDataService} from '../service/temperature-data-service.service'
 import {TempLog} from '../components/temp-log';
 import * as _ from 'lodash';
+import * as moment from 'moment';
+import uuid from 'uuid/v1';
 
 const errorMessage = {
     "NaN":"Please enter only numbers"
@@ -50,5 +52,13 @@ export class TemperatureLogContainer implements OnInit  {
     if(isNaN(temperatureText.value)
       || temperatureText.value === null
       || temperatureText.value.replace(/\s/g,'') === "") window.alert(errorMessage.NaN);
+      else {
+        const newTemperatureLog = {
+            temperature: parseFloat(temperatureText.value),
+            date: moment().format('MMMM Do YYYY'),
+            logid: uuid()
+          }
+          console.log(newTemperatureLog)
+      }
   }
 }
