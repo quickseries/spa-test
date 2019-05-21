@@ -69,6 +69,17 @@ export class TemperatureLogContainer implements OnInit  {
   }
 
   deleteTemperatureLog(temperatureLog){
-    console.log(temperatureLog)
+    let temperatureLogs = this.temperatureLogs
+    this._tempDataService.deleteTemperatureLog(temperatureLog.logid)
+                .subscribe(data =>{
+                  if(data!==null){
+                    for (let index = 0; index < temperatureLogs.length; index++) {
+                      if(temperatureLogs[index].logid === temperatureLog.logid){
+                         temperatureLogs.splice(index,1);
+                      }
+                    }
+                    this.setStats()
+                  }
+                })
   }
 }

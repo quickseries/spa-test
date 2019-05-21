@@ -3,7 +3,8 @@
         <div class="form-group">
             <input class="form-control input-lg" placeholder="Enter Temperature" 
             autofocus=""
-            #temperatureText>
+            #temperatureText
+            (keyup.enter)="addTemperature($event,temperatureText)">
             <br>
             <button (click)="addTemperature($event,temperatureText)" class="btn btn-primary btn-block">Add Temperature</button>
         </div>

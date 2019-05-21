@@ -26,4 +26,8 @@ export class TemperatureDataService {
                .pipe(map(res => res.json()));
    }
 
+   deleteTemperatureLog(logid){
+    return this._http.delete(API_URL +'/api/log/temperature/'+logid)
+                    .pipe(map(res => res.json()));
+   }
 }
