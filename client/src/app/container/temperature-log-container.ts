@@ -3,6 +3,10 @@ import {TemperatureDataService} from '../service/temperature-data-service.servic
 import {TempLog} from '../components/temp-log';
 import * as _ from 'lodash';
 
+const errorMessage = {
+    "NaN":"Please enter only numbers"
+}
+
 @Component({
     selector: 'temperatureLog',
     templateUrl: './temperature-log-container.component.html'
@@ -43,6 +47,8 @@ export class TemperatureLogContainer implements OnInit  {
   }
 
   addTemperature(event,temperatureText){
-      console.log(temperatureText.value)
+    if(isNaN(temperatureText.value)
+      || temperatureText.value === null
+      || temperatureText.value.replace(/\s/g,'') === "") window.alert(errorMessage.NaN);
   }
 }
