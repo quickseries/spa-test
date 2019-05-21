@@ -18,6 +18,12 @@ export class TemperatureLogContainer implements OnInit  {
   }
 
   ngOnInit(){
-      console.log(`ngOnInit called`)
+    this.temperatureLogs =[];
+    this._tempDataService
+        .getTempData()
+        .subscribe(temperatureData=>{
+          console.log(temperatureData)
+          this.temperatureLogs = temperatureData
+        })
   }
 }
