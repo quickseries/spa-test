@@ -1,3 +1,34 @@
+#HOW TO RUN
+
+#Installing dependencies
+1. inside root folder run npm install
+2. inside client folder run npm install
+
+#NPM RUN DEV
+1. inside root folder, from terminal run "npm run dev"
+2. it should start the server and the client
+
+# Folder Structure
+1. Server
+         config-> mLab key
+         models-> temperature log model using mongoose ( temp,date and log id)
+         routes-> logRoute GET api/log/all returns all data
+
+                           POST api/log/temperature creates a temperature log and saves in mlab
+
+                           DELETE api/log/temperature/:id deletes a temperature log based on log id
+         utils/log-> has functions for fetching, creating, deleting temperature log, these functions are used in GET POST DELETE routes
+         server.js-> server.js file , where we import db key, logRouter,etc
+
+2. Client
+         components-> defines TemperatureLog
+         container->  contains TemperatureLogContainer html template and add ,             delete, fetch handlers, stats, ngOnInit, uses                         TemperatureDataService
+         service-> TemperatureDataService makes the API calls
+         environments-> enviroment.ts We define the apiUrl
+                                                    ('http://localhost:5000')
+
+for reference on how npm run dev is defined, one can look in server's package.json "scripts"
+
 # Instructions
 
 Create an small single-page application, and share your code using a Git repo.

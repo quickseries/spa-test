@@ -1,0 +1,10 @@
+#dependencies
+/node_modules
+
+#logs
+logs
+*.log
+npm-debug.log*
+
+#mac hidden files
+.DS_Store

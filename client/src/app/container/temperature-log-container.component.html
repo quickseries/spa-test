@@ -1,0 +1,22 @@
+<div class="add-temp-form text-center">
+        <h1>Temperature Weather Log</h1>
+        <div class="form-group">
+            <input class="form-control input-lg" placeholder="Enter Temperature" 
+            autofocus=""
+            #temperatureText
+            (keyup.enter)="addTemperature($event,temperatureText)">
+            <br>
+            <button (click)="addTemperature($event,temperatureText)" class="btn btn-primary btn-block">Add Temperature</button>
+        </div>
+    </div>
+    <div> Average: {{average}}°c  Highest: {{highest}}°c     Lowest: {{lowest}}°c     Median: {{median}}°c </div>
+    <br>
+    <div class="form-group temp-log-list">
+                <div *ngFor="let temperature of temperatureLogs">
+                        <ul class="list-inline">
+                                <li class="list-inline-item"> {{temperature.date}}</li>
+                                <li class="list-inline-item"> {{temperature.temperature}} &#x2103;</li>
+                                <li class="list-inline-item"> <button (click)="deleteTemperatureLog(temperature)" class="btn btn-danger pull-right">Delete</button></li>
+                        </ul><br>
+                </div>
+    </div>
