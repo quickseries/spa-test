@@ -15,7 +15,7 @@
                         <ul class="list-inline">
                                 <li class="list-inline-item"> {{temperature.date}}</li>
                                 <li class="list-inline-item"> {{temperature.temperature}} &#x2103;</li>
-                                <li class="list-inline-item"> <button class="btn btn-danger pull-right">Delete</button></li>
+                                <li class="list-inline-item"> <button (click)="deleteTemperatureLog(temperature)" class="btn btn-danger pull-right">Delete</button></li>
                         </ul><br>
                 </div>
     </div>
