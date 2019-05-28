@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const temperature_log = sequelize.define('temperature_log', {
     temperature: {
-      type: DataTypes.STRING,
+      type: DataTypes.FLOAT,
       allowNull: false,
     },
   },{ paranoid: true });

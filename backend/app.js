@@ -24,11 +24,10 @@ app.use(function(req, res, next) {
 // error handler
 // no stacktraces leaked to user unless in development environment
 app.use(function(err, req, res, next) {
+  if (err instanceof Error) {
+    return res.status(400).json({ message: err.message});
+  }
   res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: (app.get('env') === 'development') ? err : {}
-  });
 });
 
 

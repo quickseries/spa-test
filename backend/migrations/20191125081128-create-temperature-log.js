@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       temperature: {
-        type: Sequelize.STRING,
+        type: Sequelize.FLOAT,
         allowNull: false,
       },
       createdAt: {
