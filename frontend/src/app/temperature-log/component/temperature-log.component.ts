@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TemperatureLogService } from '../service/temperature-log.service';
+import { TemperatureLogService } from '../services/temperature-log.service';
 
 @Component({
   selector: 'app-temperature-log',
