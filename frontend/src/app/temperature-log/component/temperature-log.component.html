@@ -1,0 +1,12 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+      <label>Add Temperature</label>
+      <input type="number" formControlName="temperature" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.temperature.errors }" />
+      <div *ngIf="submitted && f.temperature.errors" class="invalid-feedback">
+          <div *ngIf="f.temperature.errors.required">Temperature is required</div>
+      </div>
+  </div>
+  <div class="form-group">
+      <button class="btn btn-primary">Register</button>
+  </div>
+</form>

@@ -1,5 +1,5 @@
 const { temperature_log, sequelize } = require('../models');
-const asyncHandler = require('express-async-handler')
+const asyncHandler = require('express-async-handler');
 const express = require('express');
 const router  = express.Router();
 
