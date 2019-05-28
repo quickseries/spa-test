@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TemperatureLogService } from '../services/temperature-log.service';
+import { TemperatureLogService, TemperatureLog } from '@app/temperature-log/services/temperature-log.service';
 
 @Component({
   selector: 'app-temperature-log',
@@ -8,8 +8,9 @@ import { TemperatureLogService } from '../services/temperature-log.service';
   styleUrls: ['./temperature-log.component.scss']
 })
 export class TemperatureLogComponent implements OnInit {
-  registerForm: FormGroup;
-  submitted = false;
+  public temperatureLogs: Array<TemperatureLog>;
+  public registerForm: FormGroup;
+  public submitted = false;
 
   constructor(private formBuilder: FormBuilder, private temperatureLogService: TemperatureLogService) { }
 
@@ -17,8 +18,8 @@ export class TemperatureLogComponent implements OnInit {
       this.registerForm = this.formBuilder.group({
           temperature: ['', Validators.required],
       });
-      this.temperatureLogService.getAllTemperatureData().subscribe((data) => {
-        console.log(data);
+      this.temperatureLogService.getAllTemperatureData().subscribe((logs: Array<TemperatureLog>) => {
+        this.temperatureLogs = logs;
       });
   }
 
@@ -31,7 +32,7 @@ export class TemperatureLogComponent implements OnInit {
           return;
       }
 
-      alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value))
+      alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value));
   }
 
 }
