@@ -1,11 +1,15 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const TemperatureLog = sequelize.define('temperature_log', {
+  const temperature_log = sequelize.define('temperature_log', {
     temperature: {
       type: DataTypes.STRING,
       allowNull: false,
     },
   },{ paranoid: true });
 
-  return TemperatureLog;
+  temperature_log.associate = (models) => {
+
+  };
+
+  return temperature_log;
 };

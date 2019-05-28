@@ -1,16 +1,17 @@
-const models  = require('../models');
+const { temperature_log }  = require('../models');
 const express = require('express');
 const router  = express.Router();
 
-router.get('/', function (req, res) {
+router.get('/', async (req, res) => {
+  const logs = await temperature_log.findAll();
+  res.json(logs);
+});
+
+router.post('/create', async(req, res) => {
 
 });
 
-router.post('/create', function(req, res) {
-
-});
-
-router.destroy('/:id/destroy', function(req, res) {
+router.delete('/:id', async(req, res) => {
 
 });
 
