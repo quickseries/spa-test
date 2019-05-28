@@ -19,13 +19,14 @@ router.post('/', asyncHandler(async(req, res) => {
 router.delete('/:id', asyncHandler(async(req, res) => {
   const { params : { id }} = req;
   const transaction = await sequelize.transaction(async t => {
-    const opts = { transaction: t };
-    const found = await temperature_log.findOne({ where: { id: id }, ...opts });
+    const options = { transaction: t };
+    const found = await temperature_log.findOne({ where: { id: id }, ...options });
     if(found) {
       await temperature_log.destroy({
         where: {
           id: id
-        }
+        },
+        ...options
       });
       return "Temperature deleted successfully.";
     }
