@@ -59,6 +59,7 @@ export class TemperatureLogComponent implements OnInit {
     this.temperatureLogService.deleteTemperatureData(log).subscribe((response: DeletionMessage) => {
       const removeIndex = this.temperatureLogs.map((item: TemperatureLog) => item.id ).indexOf(log.id);
       this.temperatureLogs.splice(removeIndex, 1);
+      this.calculateStatistics();
     });
   }
 

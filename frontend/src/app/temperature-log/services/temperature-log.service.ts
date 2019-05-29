@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-const API_URL = '/api/temperature-logs';
+const API_URL = '/api';
 
 export interface TemperatureLog {
   id: number;
@@ -26,14 +26,14 @@ export class TemperatureLogService {
 
   getAllTemperatureData(): Observable<Array<TemperatureLog>> {
     return this.http
-    .get<Array<TemperatureLog>>(API_URL);
+    .get<Array<TemperatureLog>>(`${API_URL}/temperature-logs`);
   }
 
   submitTemperatureData(formData: TemperatureFormData): Observable<TemperatureLog> {
-    return this.http.post<TemperatureLog>(API_URL, formData);
+    return this.http.post<TemperatureLog>(`${API_URL}/temperature-log`, formData);
   }
 
   deleteTemperatureData(log: TemperatureLog): Observable<DeletionMessage> {
-    return this.http.delete<DeletionMessage>(`${API_URL}/${log.id}`);
+    return this.http.delete<DeletionMessage>(`${API_URL}/temperature-log/${log.id}`);
   }
 }
