@@ -29,4 +29,5 @@ module.exports = {
   development: getConfig(),
   staging: getConfig(),
   production: getConfig(),
+  test: getConfig(),
 };

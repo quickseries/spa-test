@@ -8,13 +8,13 @@ describe('models/task', function () {
   });
 
   beforeEach(function () {
-    this.TemperatureLog = require('../../models').TemperatureLog;
+    this.TemperatureLog = require('../../models').temperature_log;
   });
 
   describe('create', function () {
     it('creates a temperature log', function () {
-      return this.TemperatureLog.create({ temperature: '-14.9 °c' }).then(function (log) {
-        expect(log.temperature).to.equal('-14.9 °c');
+      return this.TemperatureLog.create({ temperature: -14.9 }).then((log) => {
+        expect(log.temperature).to.equal(-14.9);
       });
     });
   });
