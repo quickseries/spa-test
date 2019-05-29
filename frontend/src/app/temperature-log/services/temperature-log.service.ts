@@ -4,12 +4,17 @@ import { Observable } from 'rxjs';
 const API_URL = '/api/temperature-logs';
 
 export interface TemperatureLog {
+  id: number;
   temperature: number;
   createdAt: string;
 }
 
 export interface DeletionMessage {
   message: string;
+}
+
+export interface TemperatureFormData {
+  temperature: number;
 }
 
 @Injectable({
@@ -24,11 +29,11 @@ export class TemperatureLogService {
     .get<Array<TemperatureLog>>(API_URL);
   }
 
-  submitTemperatureData(temperature: number): Observable<TemperatureLog> {
-    return this.http.post<TemperatureLog>(API_URL, { temperature });
+  submitTemperatureData(formData: TemperatureFormData): Observable<TemperatureLog> {
+    return this.http.post<TemperatureLog>(API_URL, formData);
   }
 
-  deleteTemperatureData(id: number): Observable<DeletionMessage> {
-    return this.http.delete<DeletionMessage>(`${API_URL}/${id}`);
+  deleteTemperatureData(log: TemperatureLog): Observable<DeletionMessage> {
+    return this.http.delete<DeletionMessage>(`${API_URL}/${log.id}`);
   }
 }

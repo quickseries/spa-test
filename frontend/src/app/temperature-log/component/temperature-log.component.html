@@ -16,7 +16,20 @@
         </div>
     </div>
 </form>
-
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+                <tr class="table-primary">
+                    <th scope="col">Average: {{ statistics?.average }} °c</th>
+                    <th scope="col">Highest: {{ statistics?.highest }} °c</th>
+                    <th scope="col">Lowest: {{ statistics?.lowest }} °c</th>
+                    <th scope="col">Median: {{ statistics?.median }} °c</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-12">
         <table class="table table-striped">
@@ -25,15 +38,17 @@
                 <th scope="col">#</th>
                 <th scope="col">Date</th>
                 <th scope="col">Temperature</th>
-                <th scope="col">Option</th>
+                <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let logs of temperatureLogs; let i = index">
+              <tr *ngFor="let log of temperatureLogs; let i = index">
                 <th scope="row">{{i + 1}}</th>
-                <td>{{logs.createdAt | date: 'mediumDate'}}</td>
-                <td>{{logs.temperature}} °c</td>
-                <td><button class="btn btn-danger">Delete</button></td>
+                <td>{{log.createdAt | date: 'mediumDate'}}</td>
+                <td>{{log.temperature}} °c</td>
+                <td>
+                    <button class="btn btn-danger" (click)="deleteTemperatureLog(log)">Delete</button>
+                </td>
               </tr>
             </tbody>
           </table>

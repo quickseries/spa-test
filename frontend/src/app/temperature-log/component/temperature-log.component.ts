@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TemperatureLogService, TemperatureLog } from '@app/temperature-log/services/temperature-log.service';
+import { TemperatureLogService, TemperatureLog, DeletionMessage,
+  TemperatureFormData } from '@app/temperature-log/services/temperature-log.service';
+
+interface Statistics {
+  average: number;
+  lowest: number;
+  highest: number;
+  median: number;
+}
 
 @Component({
   selector: 'app-temperature-log',
@@ -8,31 +16,63 @@ import { TemperatureLogService, TemperatureLog } from '@app/temperature-log/serv
   styleUrls: ['./temperature-log.component.scss']
 })
 export class TemperatureLogComponent implements OnInit {
-  public temperatureLogs: Array<TemperatureLog>;
+  public temperatureLogs: Array<TemperatureLog> = [];
   public registerForm: FormGroup;
   public submitted = false;
+  public statistics: Statistics = {
+    average: 0,
+    lowest: 0,
+    highest: 0,
+    median: 0
+  };
 
   constructor(private formBuilder: FormBuilder, private temperatureLogService: TemperatureLogService) { }
+
+  get f() { return this.registerForm.controls; }
 
   ngOnInit() {
       this.registerForm = this.formBuilder.group({
           temperature: ['', Validators.required],
       });
-      this.temperatureLogService.getAllTemperatureData().subscribe((logs: Array<TemperatureLog>) => {
-        this.temperatureLogs = logs;
-      });
+      this.getAllTemperatureLogs();
   }
-
-  get f() { return this.registerForm.controls; }
 
   onSubmit() {
-      this.submitted = true;
-      // If form is invalid
-      if (this.registerForm.invalid) {
-          return;
+      if (this.registerForm.valid) {
+        const formData: TemperatureFormData = this.registerForm.value;
+        this.temperatureLogService.submitTemperatureData(formData).subscribe(() => {
+          this.registerForm.reset(formData);
+          this.submitted = true;
+          this.getAllTemperatureLogs();
+        });
       }
-
-      alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value));
   }
 
+  getAllTemperatureLogs() {
+    this.temperatureLogService.getAllTemperatureData().subscribe((logs: Array<TemperatureLog>) => {
+      this.temperatureLogs = logs;
+      this.calculateStatistics();
+    });
+  }
+
+  deleteTemperatureLog(log: TemperatureLog ) {
+    this.temperatureLogService.deleteTemperatureData(log).subscribe((response: DeletionMessage) => {
+      const removeIndex = this.temperatureLogs.map((item: TemperatureLog) => item.id ).indexOf(log.id);
+      this.temperatureLogs.splice(removeIndex, 1);
+    });
+  }
+
+  calculateStatistics() {
+    const temperatures: number[] = this.temperatureLogs.map((log: TemperatureLog) => log.temperature);
+    const totalTemperature: number = temperatures.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+    const median = (elements: number[]) => {
+      const mid = Math.floor(elements.length / 2);
+      const nums = [...elements].sort((a, b) => a - b);
+      return elements.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
+    };
+    this.statistics.lowest = Math.min(...temperatures);
+    this.statistics.highest = Math.max(...temperatures);
+    this.statistics.average = Math.round((totalTemperature / temperatures.length) * 100) / 100;
+    this.statistics.median = median(temperatures);
+  }
 }
