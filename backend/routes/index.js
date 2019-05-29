@@ -17,7 +17,7 @@ const routes = [
 // registers route with express
 const bindRoutes = (app, baseUrl) => {
   const router = express.Router();
-  routes.forEach(function(route){
+  routes.forEach((route) => {
     router[route.method](route.url, route.handler);
   });
   app.use(baseUrl, router);
