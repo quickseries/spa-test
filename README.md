@@ -4,16 +4,54 @@
     3. (Optional) Install postgresdb client - pgAdmin.
 
 # Setup frontend
-    ```
     1. Go to frontend folder and run npm install.
     2. After that run npm start.
-    ```
 
 # Setup backend
-    ```
     1. Go to backend folder and run npm install.
-    3. After that run npm start and server will start at port 3000.
-    ```
+    2. After that run npm start and server will start at port 3000.
+
+# Folder Structure
+    1. Frontend (Followed angular styleguide https://angular.io/guide/styleguide)
+        -src
+          -app
+            - app.module.ts (core and home module are injected here)
+            - app.component.ts
+            - app.component.html
+          -core
+            - core.module.ts (All 3rd party modules injected here)
+            - http-interceptor.ts (Intercept all http requests, central error handling )
+            - module-import-gaurd.ts
+          -home
+            - temperature-log
+                - component
+                - interfaces
+                - services
+            - home.component.html
+            - home.component.ts
+            - home.module.ts
+
+    2. Backend
+        - bin
+            - www
+        - config
+        - controllers
+            - temperature-logs
+                - create.post.js
+                - destroy.delete.js
+                - show.get.js
+                - index.js
+        - migrations
+            - index.js
+            - temperature_logs.js
+        - models
+        - routes
+            - index.js
+        - test
+            - integration
+            - unit
+        - .env
+        - app.js
 
 # User Stories:
 - As a user, I want to add a temperature to my log
