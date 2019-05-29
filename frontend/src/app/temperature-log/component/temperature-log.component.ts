@@ -66,9 +66,9 @@ export class TemperatureLogComponent implements OnInit {
     const temperatures: number[] = this.temperatureLogs.map((log: TemperatureLog) => log.temperature);
     const totalTemperature: number = temperatures.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
     const median = (elements: number[]) => {
-      const mid = Math.floor(elements.length / 2);
-      const nums = [...elements].sort((a, b) => a - b);
-      return elements.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
+      const middle: number = Math.floor(elements.length / 2);
+      const numbers: number[] = [...elements].sort((a, b) => a - b);
+      return elements.length % 2 !== 0 ? numbers[middle] : (numbers[middle - 1] + numbers[middle]) / 2;
     };
     this.statistics.lowest = Math.min(...temperatures);
     this.statistics.highest = Math.max(...temperatures);
