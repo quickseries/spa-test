@@ -1,9 +1,12 @@
 const dotenv = require('dotenv');
 const fs = require('fs');
 const DEFAULT_ENV_FILE = `${__dirname}/../.env`;
-const TEST_ENV_FILE = `${__dirname}/../.env.test`;
 
-const config = path => {
+/**
+ * Function to create a sequelize config object from .env
+ * @param {*} path File path
+ */
+const getConfig = path => {
   const isValidPath = path && fs.existsSync(path);
   const { parsed } = isValidPath ? dotenv.config({ path }) : dotenv.config({ path: DEFAULT_ENV_FILE });
   return {
@@ -23,8 +26,7 @@ const config = path => {
 };
 
 module.exports = {
-  development: config(),
-  staging: config(),
-  production: config(),
-  test: config(TEST_ENV_FILE),
+  development: getConfig(),
+  staging: getConfig(),
+  production: getConfig(),
 };

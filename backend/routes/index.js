@@ -1,6 +1,7 @@
 const temperatureLogApiHandler = require("../controllers/temperature-logs");
 const express = require('express');
 
+// Route types constants
 const ROUTE_TYPE = {
   GET: 'get',
   PUT: 'put',
@@ -8,6 +9,7 @@ const ROUTE_TYPE = {
   DELETE: 'delete',
 };
 
+// Array of routes in the entire application
 const routes = [
   { method: ROUTE_TYPE.GET, url: "/temperature-logs", handler: temperatureLogApiHandler.getAllTemperatureLogs },
   { method: ROUTE_TYPE.POST, url: "/temperature-log", handler: temperatureLogApiHandler.createTemperatureLog },
