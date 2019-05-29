@@ -25,7 +25,7 @@ app.use(function(req, res, next) {
 // no stacktraces leaked to user unless in development environment
 app.use(function(err, req, res, next) {
   if (err instanceof Error) {
-    return res.status(400).json({ message: err.message});
+    return res.status(460).json({ message: err.message});
   }
   res.status(err.status || 500).json({ message: 'Internal server error.'});
 });

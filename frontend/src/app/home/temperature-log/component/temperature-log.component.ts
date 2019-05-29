@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TemperatureLogService, TemperatureLog, DeletionMessage,
-  TemperatureFormData } from '@app/temperature-log/services/temperature-log.service';
-
-interface Statistics {
-  average: number;
-  lowest: number;
-  highest: number;
-  median: number;
-}
+import { ToastrManager } from 'ng6-toastr-notifications';
+import { Statistics } from '@app/home/temperature-log/interfaces/statistics';
+import { TemperatureLog } from '../interfaces/temperature-log';
+import { TemperatureLogService } from '../services/temperature-log.service';
+import { TemperatureFormData } from '../interfaces/temperature-form-data';
+import { DeletionMessage } from '../interfaces/deletion-message';
 
 @Component({
   selector: 'app-temperature-log',
@@ -26,7 +23,8 @@ export class TemperatureLogComponent implements OnInit {
     median: 0
   };
 
-  constructor(private formBuilder: FormBuilder, private temperatureLogService: TemperatureLogService) { }
+  constructor(private formBuilder: FormBuilder, private temperatureLogService: TemperatureLogService,
+              private toastr: ToastrManager) { }
 
   get f() { return this.registerForm.controls; }
 
@@ -40,10 +38,11 @@ export class TemperatureLogComponent implements OnInit {
   onSubmit() {
       if (this.registerForm.valid) {
         const formData: TemperatureFormData = this.registerForm.value;
-        this.temperatureLogService.submitTemperatureData(formData).subscribe(() => {
-          this.registerForm.reset(formData);
+        this.temperatureLogService.submitTemperatureData(formData).subscribe((log: TemperatureLog) => {
+          this.toastr.successToastr('Temperature added successfully!');
           this.submitted = true;
-          this.getAllTemperatureLogs();
+          this.temperatureLogs.push(log);
+          this.calculateStatistics();
         });
       }
   }
@@ -57,9 +56,12 @@ export class TemperatureLogComponent implements OnInit {
 
   deleteTemperatureLog(log: TemperatureLog ) {
     this.temperatureLogService.deleteTemperatureData(log).subscribe((response: DeletionMessage) => {
+      this.toastr.successToastr(response.message);
       const removeIndex = this.temperatureLogs.map((item: TemperatureLog) => item.id ).indexOf(log.id);
       this.temperatureLogs.splice(removeIndex, 1);
       this.calculateStatistics();
+    }, (error: DeletionMessage) => {
+      this.toastr.errorToastr(error.message);
     });
   }
 
@@ -69,7 +71,8 @@ export class TemperatureLogComponent implements OnInit {
     const median = (elements: number[]) => {
       const middle: number = Math.floor(elements.length / 2);
       const numbers: number[] = [...elements].sort((a, b) => a - b);
-      return elements.length % 2 !== 0 ? numbers[middle] : (numbers[middle - 1] + numbers[middle]) / 2;
+      const result: number = elements.length % 2 !== 0 ? numbers[middle] : (numbers[middle - 1] + numbers[middle]) / 2;
+      return Math.round(result * 100) / 100;
     };
     this.statistics.lowest = Math.min(...temperatures);
     this.statistics.highest = Math.max(...temperatures);
